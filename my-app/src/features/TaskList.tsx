@@ -20,7 +20,7 @@ const TaskList: React.FC = () => {
       <h1>Task List</h1>
       <ul>
         {tasks.map((task) => (
-          <li key={task.id}>
+          <li key={task.id} className='text-3xl font-bold underline'>
             <input
               type="checkbox"
               checked={task.completed}

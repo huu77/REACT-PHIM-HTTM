@@ -1,10 +1,9 @@
 // reducers.ts
-import { combineReducers } from '@reduxjs/toolkit';
+import { AnyAction, CombinedState, Reducer, combineReducers } from '@reduxjs/toolkit';
 import tasksReducer from '../features/tasksSlice'
 
-const rootReducer = combineReducers({
+const rootReducer: Reducer<CombinedState<any>, AnyAction>  = combineReducers({
 //   user: userReducer, from slice  ex: userSlice.reducer=== userReducer
-  // Add more reducers as needed
   tasks: tasksReducer,
 });
 
