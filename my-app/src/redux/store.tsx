@@ -9,7 +9,7 @@ import storage from 'redux-persist/lib/storage' // defaults to localStorage for 
 const persistConfig = {
     key: 'root',
     storage,
-    whitelist: [] // các slice mà u muốn nó lưu lại trong localStorage and blacklist là ngược lại, ko có dùng thì nó lưu hết
+    whitelist: ['tasks'] // các slice mà u muốn nó lưu lại trong localStorage and blacklist là ngược lại, ko có dùng thì nó lưu hết
   }
   
   const persistedReducer = persistReducer(persistConfig, rootReducer)
