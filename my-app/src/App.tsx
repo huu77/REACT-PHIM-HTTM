@@ -1,14 +1,22 @@
 
 import { useEffect, useState } from 'react'
 import './App.css'
-import TaskList from './features/TaskList'
+import { BrowserRouter , Route, Link, Routes } from 'react-router-dom';
+import { Wellcomepage,Err404, Login } from './features';
  
  
 function App() {
   
   return (
     <>
-   <TaskList/>
+     <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Wellcomepage />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="*" element={<Err404 />} />
+      </Routes>
+
+    </BrowserRouter>
     </>
   )
 }
