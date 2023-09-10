@@ -3,5 +3,4 @@ export interface Form {
     password: string
 }
 export interface ErrForm extends Form {
-    loi: string;
 }
