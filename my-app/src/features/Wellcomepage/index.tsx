@@ -1,7 +1,24 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React ,{useEffect} from 'react'
+import { Link ,useNavigate} from 'react-router-dom'
 
 const index = () => {
+  const navigation=useNavigate()
+ 
+ useEffect(() => {
+  checkUserToken();
+}, []);
+
+const checkUserToken = async () => {
+  try {
+    const token = localStorage.getItem('accessToken')
+    if (token) {
+      // Nếu userToken tồn tại, chuyển hướng vào trang Main
+      navigation('/home')
+    }
+  } catch (error) {
+    console.log('Lỗi khi kiểm tra userToken:', error);
+  }
+};
     return (
         <> <div className="bg-white">
         <header className="absolute inset-x-0 top-0 z-50">
@@ -57,7 +74,7 @@ const index = () => {
                 >
                   Get started
                 </Link>
-                
+               
               </div>
             </div>
           </div>

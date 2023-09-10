@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react'
 import './App.css'
 import { BrowserRouter , Route, Link, Routes } from 'react-router-dom';
-import { Wellcomepage,Err404, Login } from './features';
+import { Wellcomepage,Err404, Login, Home } from './features';
  
  
 function App() {
@@ -13,6 +13,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Wellcomepage />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/home" element={<Home />} />
         <Route path="*" element={<Err404 />} />
       </Routes>
 

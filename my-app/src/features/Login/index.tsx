@@ -1,24 +1,25 @@
 import React, { ChangeEvent, useState } from 'react'
-import { Link } from 'react-router-dom'
-import { isValidEmail, isStrongPassword } from '../../format'
+import { Link, useNavigate } from 'react-router-dom'
+import { isValidEmail, isStrongPassword, isValidation } from '../../format'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-interface Form {
-    email: string,
-    password: string
-}
-interface ErrForm extends Form {
-    loi: string;
-}
-const index = ():JSX.Element => {
+import { ErrForm, Form } from './type';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import requestApi from '../../axios';
+import LoadingSpinner from '../../Loading';
+
+
+const index = (): JSX.Element => {
+    const navigate = useNavigate();
     const [formData, setFormData] = useState<Form>({
-        email: '',
+        username: '',
         password: '',
     });
 
     // funtion check when user stop give data on input
-    const debounceTime = 500; // Thời gian debounce (milliseconds)
+    const debounceTime = 300; // Thời gian debounce (milliseconds)
     let debounceTimer: NodeJS.Timeout | null = null;
-
+    // handle input change for input
     const handleInputChange = (name: string, event: ChangeEvent<HTMLInputElement>) => {
         const value = event.target.value;
 
@@ -35,55 +36,78 @@ const index = ():JSX.Element => {
 
     };
     // check
-    const [err, setErr] = useState({});
+    const [err, setErr] = useState<ErrForm>({
+        username: '',
+        password: '',
+        loi: ''
+    });
 
     //loading
     const [loading, setLoading] = useState(false);
-    const isValidation = () => {
-        let isValid = true
-        const enrrors: ErrForm = {
-            email: '',
-            password: '',
-            loi: ''
-        }
-        //check username
-        if (!formData.email || formData.email.trim() === '') {
-            enrrors.email = "Please enter email..."
-        } else {
-            if (!isValidEmail(formData.email)) {
 
-                enrrors.email = "Email is not format... "
-            }
-        }
+    const handleSendForm = async () => {
+        // check err
+        const { isValid, errors } = await isValidation(formData);
+        //   if false show err 
 
-        //check password
-        if (!formData.password || formData.password.trim() === '') {
-            enrrors.password = "Please enter a valid password."
-        } else {
-            if (!isStrongPassword(formData.password)) {
-                enrrors.password = "Password must be at least 8 characters long and contain at least one uppercase letter, one lowercase letter, one number, and one special character. "
-            }
-        }
+        if (isValid === false) {
+            toast.error('Có lỗi xảy ra. Vui lòng kiểm tra lại thông tin.');
+            setErr(prevErr => ({
+                ...prevErr,
+                username: errors.username,
+                password: errors.password,
+                loi: errors.loi
+            }));
 
-
-        if (Object.keys(enrrors).length > 0) {
-            setErr(enrrors)
-            isValid = false
         }
         else {
-            setErr({})
+            setLoading(true)
+            try {
+                console.log(formData);
+
+                // get api and save token and change path to home
+                const x = await requestApi('auth/form/signin', 'POST', formData)
+                
+                const {accessToken,refreshToken}=x
+                // save token
+                localStorage.setItem('accessToken', accessToken);
+                localStorage.setItem('refreshToken', refreshToken);
+                setLoading(false)
+
+                navigate('/home')
+
+
+            } catch (error) {
+                setLoading(false)
+                toast.error('Username or password is not valid');
+            }
         }
-        return isValid
-    }
-    const handleSendForm = () => {
-        console.log(formData);
 
     }
+
     return (
         <>
-            <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
+            <ToastContainer />
+            {loading && (
+                <div
+                    style={{
+                        position: 'absolute',
+                        top: '50%',
+                        left: '50%',
+                        transform: 'translate(-50%, -50%)',
+                        width: '100px', // Đặt chiều rộng theo nhu cầu
+                        height: '100px', // Đặt chiều cao theo nhu cầu
+                        backgroundColor: 'rgba(0, 0, 0, 0.5)', // Đặt màu nền xám,
+                        borderRadius: '50%',
+
+                    }}
+                >
+                    <LoadingSpinner color="#36D7B7" loading={loading} size={100} />
+                </div>
+            )}
+            <div className={`flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8 ${loading ? 'opacity-50' : ''}`}>
                 <Link to={'/'}>
-                <ArrowBackIcon/>
+                    <ArrowBackIcon />
                 </Link>
                 <div className="sm:mx-auto sm:w-full sm:max-w-sm">
                     <img
@@ -99,26 +123,27 @@ const index = ():JSX.Element => {
                 <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
                     <div className="space-y-6" >
                         <div>
-                            <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
-                                Email address
+                            <label htmlFor="username" className={`block text-sm font-medium leading-6  ${err.username !== "" ? 'text-orange-900' : 'text-gray-900'}`}>
+                                Username
                             </label>
                             <div className="mt-2">
                                 {/* email */}
                                 <input
-                                    id="email"
-                                    name="email"
-                                    type="email"
-                                    autoComplete="email"
+                                    id="username"
+                                    name="username"
+                                    type="text"
+                                    autoComplete="text"
                                     required
-                                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                    onChange={(value) => handleInputChange('email', value)}
+                                    className={`${err.username !== "" ? 'text-orange-900 font-bold border-orange-600 border-1' : 'text-gray-900'} block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6`}
+                                    onChange={(value) => handleInputChange('username', value)}
                                 />
+                                <label className='text-orange-900 forn-size-1'>{err.username}</label>
                             </div>
                         </div>
 
                         <div>
                             <div className="flex items-center justify-between">
-                                <label htmlFor="password" className="block text-sm font-medium leading-6 text-gray-900">
+                                <label htmlFor="password" className={`block text-sm font-medium leading-6  ${err.username !== "" ? 'text-orange-900' : 'text-gray-900'}`}>
                                     Password
                                 </label>
                                 <div className="text-sm">
@@ -137,8 +162,9 @@ const index = ():JSX.Element => {
                                     autoComplete="current-password"
                                     required
                                     onChange={(value) => handleInputChange('password', value)}
-                                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                    className={`${err.username !== "" ? 'text-orange-900 font-bold border-orange-600 border-1' : 'text-gray-900'} block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6`}
                                 />
+                                <label className='text-orange-900 forn-size-1'>{err.password}</label>
                             </div>
                         </div>
 
