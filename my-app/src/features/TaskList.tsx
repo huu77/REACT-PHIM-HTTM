@@ -1,8 +1,14 @@
 // TaskList.tsx
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { RootState} from '../redux/store';
-import {addTask,toggleTask} from '../features/tasksSlice'
+import { RootState } from '../redux/store';
+import { addTask, toggleTask } from '../features/tasksSlice'
+export interface TypeOfTask {
+  id: React.Key | null | undefined; 
+  completed: boolean | undefined; 
+  text: string | number | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | null | undefined;
+
+}
 const TaskList: React.FC = () => {
   const tasks = useSelector((state: RootState) => state.tasks.tasks);
   const dispatch = useDispatch();
@@ -11,15 +17,15 @@ const TaskList: React.FC = () => {
     dispatch(addTask(text));
   };
 
-  const handleToggleTask = (taskId: number) => {
+  const handleToggleTask = (taskId: any) => {
     dispatch(toggleTask(taskId));
   };
 
   return (
-    <div>
-      <h1>Task List</h1>
+    <div className='w-screen mt-20'>
+      <h1 className='mt-20'>Task List</h1>
       <ul>
-        {tasks.map((task) => (
+        {tasks.map((task:TypeOfTask) => (
           <li key={task.id} className='text-3xl font-bold underline'>
             <input
               type="checkbox"

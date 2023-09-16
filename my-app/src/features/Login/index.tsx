@@ -56,7 +56,7 @@ const index = (): JSX.Element => {
                 ...prevErr,
                 username: errors.username,
                 password: errors.password,
-        
+
             }));
 
         }
@@ -67,13 +67,13 @@ const index = (): JSX.Element => {
 
                 // get api and save token and change path to home
                 const x = await requestApi('auth/form/signin', 'POST', formData)
-                
-                const {accessToken,refreshToken}=x
+
+                const { accessToken, refreshToken } = x
                 // save token
                 localStorage.setItem('accessToken', accessToken);
                 localStorage.setItem('refreshToken', refreshToken);
-                setLoading(false)
 
+                setLoading(false)
                 navigate('/home')
 
 

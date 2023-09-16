@@ -17,7 +17,7 @@ const index = (): JSX.Element => {
         firstname: '',
         password: '',
         confirmpassword: '',
-        email:''
+        email: ''
     });
 
     const debounceTime = 300; // Thời gian debounce (milliseconds)
@@ -44,7 +44,7 @@ const index = (): JSX.Element => {
         firstname: '',
         lastname: '',
         confirmpassword: '',
-        email:''
+        email: ''
 
     });
 
@@ -65,21 +65,31 @@ const index = (): JSX.Element => {
                 firstname: errors.firstname,
                 lastname: errors.lastname,
                 confirmpassword: errors.confirmpassword,
-                email:errors.email
+                email: errors.email
             }));
 
         }
         else {
             setLoading(true)
             try {
-                
-                
+                const value = {
+                    username: formData.username,
+                    name: {
+                        first: formData.firstname,
+                        last: formData.lastname
+                    },
+                    email: formData.email,
+                    password: formData.password,
+                    repeatPassword: formData.confirmpassword
+                }
+
 
                 // get api and save token and change path to home
-// await requestApi('auth/form/signup','POST',)
-                // save token
-
+               const x= await requestApi('auth/form/signup','POST',value)
+                console.log("value success",x);
+                
                 setLoading(false)
+                toast.success('You create success ...')
                 navigate('/login')
 
             } catch (error) {
@@ -87,10 +97,10 @@ const index = (): JSX.Element => {
                 toast.error('Username or password is not valid');
             }
         }
-     
+
 
     }
- 
+
 
     return (
         <>
@@ -150,8 +160,8 @@ const index = (): JSX.Element => {
                             autoComplete={'text'}
                             handleInputChange={handleInputChange}
                         />
-                           {/* email */}
-                           <CompomentName labelTitle={'email'}
+                        {/* email */}
+                        <CompomentName labelTitle={'email'}
                             nameTitle={'email'}
                             err={err}
                             autoComplete={'text'}
