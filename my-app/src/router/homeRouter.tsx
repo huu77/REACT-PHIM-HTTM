@@ -1,5 +1,5 @@
 import { Home } from "../features";
-import { Categories } from "../features/Compoment";
+import { Categories,SlideComponent } from "../features/Compoment";
 import TaskList from "../features/TaskList";
 
 export const homeRouter={
@@ -12,7 +12,7 @@ export const homeRouter={
         },
         {
             path: "test1",
-            element: <TaskList />,
+            element: <SlideComponent />,
         }
     ]
 }

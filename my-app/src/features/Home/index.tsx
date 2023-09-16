@@ -9,6 +9,7 @@ const index = () => {
         <>  
         <Header/>
         <Outlet/>
+        <Footer/>
         </>
     )
 }

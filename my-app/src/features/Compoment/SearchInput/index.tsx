@@ -11,7 +11,7 @@ function SearchInput({ textInput, setTextInput ,handleClick2,setHasChanged}: Sea
 
    
   return (
-    <div className="w-full max-w-xs mx-auto">
+    <div className=" hidden md:block w-full max-w-xs mx-auto ">
       <div className="relative">
         <input
           type="text"

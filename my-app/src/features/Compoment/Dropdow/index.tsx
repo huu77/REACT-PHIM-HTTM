@@ -9,7 +9,8 @@ function Dropdown() {
     };
     // get api , set name = name user
     const name = 'Chào Henry'
-    const items = [name, 'Thông tin', 'Đăng xuất'];
+    const NameInfo='Thông tin'
+    const items = [name, NameInfo, 'Đăng xuất'];
     const handleClick = (item: any) => {
         setIsOpen(false);
         if (item === 'Đăng xuất') {
@@ -18,13 +19,15 @@ function Dropdown() {
 
             navigation('/')
         }
-        else {
-            navigation('#')
+        else if(item === NameInfo){
+            navigation('/info')
         }
+        
+        
 
     }
     return (
-        <div className='mr-16 relative px-4'>
+        <div className=' lg:mr-16 relative px-4 '>
             <div
                 onClick={toggleDropdown}
                 className="inline-block h-8 w-8 rounded-full ring-2 ring-white cursor-pointer"
@@ -36,7 +39,7 @@ function Dropdown() {
                 />
             </div>
             {isOpen && (
-                <ul className="absolute mt-2 py-2 w-32 bg-white border rounded-lg shadow-lg">
+                <ul className=" -translate-x-16  mt-4 md:mt-2 py-2 w-32 bg-white border rounded-lg shadow-lg absolute ">
                     {items.map((item, index) => (
                         <li
                             key={index}

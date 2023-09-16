@@ -48,7 +48,7 @@ const index = () => {
         <> <div className="bg-white">
             <header className="absolute inset-x-0 top-0 z-50 border-b-2">
                 <nav className="flex items-center justify-evenly p-6 lg:px-8" aria-label="Global">
-                    <div className="flex lg:flex-1">
+                    <div className="w-full flex lg:flex-1 justify-between   ">
                         <Link to="#" className="-m-1.5 p-1.5 ">
                             <span className="sr-only">Your Company</span>
                             <img
@@ -58,10 +58,10 @@ const index = () => {
                             />
                         </Link>
                         {/* item */}
-                        <div className="flex flex-row mx-1 px-2 justify-evenly">
+                        <div className="hidden lg:flex lg:justify-evenly  flex-row mx-1 px-2  ">
                             {data.map((item, index) => (
-                                <Link to={item.link} key={index} onClick={() => handleClick(item.ID)}>
-                                    <span className={`block font-mono mx-3 text-ellipsis text-bold text-3xl ${item.active === true ? " text-fuchsia-900" : 'text-black-800 '}`}>{item.TITLE}</span>
+                                <Link to={item.link} key={index} onClick={() => handleClick(item.ID)}  className="flex justify-between">
+                                  <span className={`block font-mono mx-3 text-ellipsis text-bold text-3xl ${item.active === true ? "text-fuchsia-900" : 'text-black-800 '} hidden md:block`}>{item.TITLE}</span>
                                 </Link>
                             ))}
                         </div>
@@ -72,9 +72,13 @@ const index = () => {
                             setHasChanged={setHasChanged}
                         />
                         {/* bell  */}
-                        <CircleNotificationsIcon fontSize='large' />
+                        <div className='flex'>
+                        <CircleNotificationsIcon fontSize='large' className='hidden lg:block xl:text-2xl' />
+
                         {/* icon user */}
                         <Dropdown />
+                        </div>
+                        
 
 
 

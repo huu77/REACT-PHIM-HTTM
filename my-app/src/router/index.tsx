@@ -5,6 +5,7 @@ import {
 import { Err404, Login, Register, Wellcomepage } from "../features";
 
 import { homeRouter } from "./homeRouter";
+import { infoRouter } from "./infoRouter";
 
 
 
@@ -26,5 +27,5 @@ export const routers = createBrowserRouter(
         element: <Err404 />,
     },
         homeRouter,
-
+        infoRouter
     ])
