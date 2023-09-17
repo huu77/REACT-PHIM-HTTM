@@ -1,6 +1,9 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { Link, useNavigate } from 'react-router-dom'
 import requestApi from '../../../axios';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../../../redux/reducer';
+import { dataUser } from '../../../redux/slice/userSlice';
 const apiUrl = import.meta.env.VITE_SOME_KEY
 function Dropdown() {
     const navigation = useNavigate()
@@ -9,29 +12,20 @@ function Dropdown() {
     const toggleDropdown = () => {
         setIsOpen(!isOpen);
     };
-    // get api , set name = name user
-    const [name, setName] = useState('User')
-    const [avarta, setAvata] = useState('')
+   
+     
     // use memo
-    const fetchData = useMemo(() => {
-        return async () => {
-            try {
-                const response = await requestApi('users/profile', 'GET', undefined)
-                setName(response.name.last);
-                const anh = apiUrl + response.avatar
-                setAvata(anh)
-            } catch (error) {
-                console.log(error);
-
-            }
-        };
-    }, []);
+    const dispatch = useDispatch();
+    const { user, loading, error } = useSelector((state: RootState) => state.user);
+     
+   
+    
     useEffect(() => {
-        fetchData();
-    }, [fetchData])
+     dispatch(dataUser());
+   }, [dispatch]);
 
     const NameInfo = 'Thông tin'
-    const items = ['Chào ' + name + '!', NameInfo, 'Đăng xuất'];
+    const items = ['Chào ' + user.name?.last + '!', NameInfo, 'Đăng xuất'];
     const handleClick = (item: any) => {
         setIsOpen(false);
         if (item === 'Đăng xuất') {
@@ -55,7 +49,7 @@ function Dropdown() {
             >
                 <img
                     className="inline-block h-8 w-8 rounded-full ring-2 ring-white"
-                    src={avarta === '' ? "https://images.unsplash.com/photo-1491528323818-fdd1faba62cc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" : avarta}
+                    src={user.avarta === '' ? "https://images.unsplash.com/photo-1491528323818-fdd1faba62cc?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" : apiUrl+user.avatar}
                     alt=""
                 />
             </div>
