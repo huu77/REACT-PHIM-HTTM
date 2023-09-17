@@ -1,12 +1,20 @@
 import React ,{useEffect} from 'react'
 import { Link ,Outlet,useNavigate} from 'react-router-dom'
 import Dropdown from '../Compoment/Dropdow'
-import requestApi from '../../axios'
+import {dataUser } from '../../redux/slice/userSlice'
 import Compoment from './Compoment'
+import { useDispatch, useSelector } from 'react-redux'
+import { RootState } from '../../redux/store'
+ 
 const index = () => {
   const navigation=useNavigate()
- const name='Huu'
- 
+  
+ const dispatch = useDispatch();
+ const { user,loading} = useSelector((state: RootState) => state.user);
+
+ useEffect(() => {
+   dispatch(dataUser());
+ }, [dispatch]);
 
     return (
         <> <div className="bg-white">
@@ -25,7 +33,7 @@ const index = () => {
             </div>
              
               <div className='flex'>
-                <h1 className='hidden sm:block font-bold'>Hi {name} !</h1>
+                <h1 className='hidden sm:block font-bold'>Hi {user.name.last} !</h1>
               <Dropdown />
               </div>
            
@@ -46,7 +54,7 @@ const index = () => {
             />
           </div>
 
-         <Compoment/>
+         <Compoment user={user} loading={loading}/>
           <div
             className="absolute inset-x-0 top-[calc(100%-13rem)] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[calc(100%-30rem)]"
             aria-hidden="true"
@@ -66,3 +74,5 @@ const index = () => {
 }
 
 export default index
+
+

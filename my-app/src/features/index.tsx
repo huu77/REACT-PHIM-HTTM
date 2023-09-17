@@ -5,6 +5,7 @@ import Home from './Home'
 import Register from './Register'
 import Info from './Info'
 import Dashboard from './Dashboard'
+import Movie from './Movie'
 export {
     Wellcomepage,
     Err404, 
@@ -12,5 +13,6 @@ export {
     Home,
     Register,
     Info,
-    Dashboard
+    Dashboard,
+    Movie
 }
