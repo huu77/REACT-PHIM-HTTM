@@ -6,7 +6,7 @@ import { Err404, Login, Register, Wellcomepage } from "../features";
 
 import { homeRouter } from "./homeRouter";
 import { infoRouter } from "./infoRouter";
-
+import {dashboardRouter}  from './dashboardRouter'
 
 
 export const routers = createBrowserRouter(
@@ -27,5 +27,6 @@ export const routers = createBrowserRouter(
         element: <Err404 />,
     },
         homeRouter,
-        infoRouter
+        infoRouter,
+        dashboardRouter,
     ])

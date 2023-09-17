@@ -1,16 +1,11 @@
 import React ,{useEffect} from 'react'
 import { Link ,Outlet,useNavigate} from 'react-router-dom'
 import Dropdown from '../Compoment/Dropdow'
-import requestApi from '../../axios'
 
 const index = () => {
   const navigation=useNavigate()
  const name='Huu'
-const handleClick=async()=>{
- const data=await requestApi('users/profile','GET',undefined)
- console.log(data);
- 
-}
+
 
     return (
         <> <div className="bg-white">
@@ -37,7 +32,7 @@ const handleClick=async()=>{
       
         </header>
   <Outlet/>
-     <button onClick={handleClick}>click</button>
+     
       </div>
         </>
     )

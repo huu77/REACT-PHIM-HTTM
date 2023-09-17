@@ -1,6 +1,6 @@
 import React, { ChangeEvent, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { isValidEmail, isStrongPassword, isValidation } from '../../format'
+import { isValidation } from '../../format'
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { ErrForm, Form } from './type';
 import { toast, ToastContainer } from 'react-toastify';
@@ -73,8 +73,16 @@ const index = (): JSX.Element => {
                 localStorage.setItem('accessToken', accessToken);
                 localStorage.setItem('refreshToken', refreshToken);
 
+              
+                const data=await requestApi('users/profile','GET',undefined)
+                console.log(data.role);
                 setLoading(false)
-                navigate('/home')
+                if(data.role==='user'){
+                    navigate('/home')
+                }else{
+                    navigate('/dashboard')
+                }
+             
 
 
             } catch (error) {
