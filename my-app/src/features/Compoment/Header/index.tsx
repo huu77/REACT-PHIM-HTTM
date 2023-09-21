@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import CircleNotificationsIcon from '@mui/icons-material/CircleNotifications';
-
+import MenuIcon from '@mui/icons-material/Menu';
 import SearchInput from '../SearchInput';
 import Dropdown from '../Dropdow';
+import MyComponent from './menu';
 const initialData = [
-    { ID: 1, TITLE: 'TRUYEN HINH', active: true,link:'/home' },
-    { ID: 2, TITLE: 'PHIM ', active: false ,link:'/home/test1'},
-    { ID: 3, TITLE: 'VIDEO', active: false ,link:'/home/test2'}
+    { ID: 1, TITLE: 'TRANG CHỦ', active: true, link: '/home' },
+    { ID: 2, TITLE: 'PHIM ', active: false, link: '/home/test1' },
+    { ID: 3, TITLE: 'VIDEO', active: false, link: '/home/test2' }
 ];
 const index = () => {
     const navigation = useNavigate()
@@ -47,8 +48,9 @@ const index = () => {
     return (
         <> <div className="bg-white">
             <header className="absolute inset-x-0 top-0 z-50 border-b-2">
-                <nav className="flex items-center justify-evenly p-6 lg:px-8" aria-label="Global">
-                    <div className="w-full flex lg:flex-1 justify-between   ">
+                <nav className="flex items-center justify-evenly p-6 lg:px-8 bg-gray-100" aria-label="Global">
+                     <MyComponent/>
+                    <div className="w-full flex lg:flex-1 justify-between  items-center ">
                         <Link to="#" className="-m-1.5 p-1.5 ">
                             <span className="sr-only">Your Company</span>
                             <img
@@ -57,11 +59,12 @@ const index = () => {
                                 alt=""
                             />
                         </Link>
+
                         {/* item */}
                         <div className="hidden lg:flex lg:justify-evenly  flex-row mx-1 px-2  ">
                             {data.map((item, index) => (
-                                <Link to={item.link} key={index} onClick={() => handleClick(item.ID)}  className="flex justify-between">
-                                  <span className={`block font-mono mx-3 text-ellipsis text-bold text-3xl ${item.active === true ? "text-fuchsia-900" : 'text-black-800 '} hidden md:block`}>{item.TITLE}</span>
+                                <Link to={item.link} key={index} onClick={() => handleClick(item.ID)} className="flex justify-between">
+                                    <span className={`block font-mono mx-3 text-ellipsis text-bold text-3xl ${item.active === true ? "text-fuchsia-900" : 'text-black-800 '} hidden md:block`}>{item.TITLE}</span>
                                 </Link>
                             ))}
                         </div>
@@ -73,12 +76,12 @@ const index = () => {
                         />
                         {/* bell  */}
                         <div className='flex'>
-                        <CircleNotificationsIcon fontSize='large' className='hidden lg:block xl:text-2xl' />
+                            <CircleNotificationsIcon fontSize='large' className='hidden lg:block xl:text-2xl' />
 
-                        {/* icon user */}
-                        <Dropdown />
+                            {/* icon user */}
+                            <Dropdown />
                         </div>
-                        
+
 
 
 

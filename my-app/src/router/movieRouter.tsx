@@ -1,5 +1,5 @@
- import {Movie} from '../features'
-import TaskList from "../features/TaskList";
+ import {Movie, MovieItem} from '../features'
+ 
 
 export const movieRouter={
     path: "/movies",
@@ -7,7 +7,7 @@ export const movieRouter={
     children: [
         {
             path: "",
-            element: <TaskList />,
+            element: <MovieItem />,
         },
       
     ]

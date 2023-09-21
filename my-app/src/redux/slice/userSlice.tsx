@@ -1,7 +1,7 @@
 
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import requestApi from '../../axios';
-import { RootState } from '../store'; // Đảm bảo bạn đã định nghĩa RootState trong store Redux của bạn
+ 
 
 export type Role = 'user' | 'admin'
 export interface User {
@@ -28,7 +28,7 @@ const initialState: UserState = {
 export const dataUser = createAsyncThunk('user/getdata', async () => {
     const response = await requestApi('users/profile', 'GET', undefined)
     return response
-})
+},undefined)
 
 const userSlice = createSlice({
     name: 'user',

@@ -22,14 +22,14 @@ const index = () => {
           <nav className="flex items-center justify-between p-6 lg:px-8" aria-label="Global">
             <div className="flex lg:flex-1">
               <a href="#" className="-m-1.5 p-1.5">
-                <span className="sr-only ">Your Company</span>
+                <span className="sr-only ">Your Movie</span>
                 <img
                   className="h-8 w-auto"
                   src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
                   alt=""
                 />
               </a>
-              <span className='mx-2 font-bold text-xl font-mono'>Your Info</span>
+              <span className='mx-2 font-bold text-xl font-mono'>Your Movie</span>
             </div>
              
               <div className='flex'>
@@ -53,12 +53,13 @@ const index = () => {
               }}
             />
           </div>
-
+ 
         <Outlet/>
           <div
             className="absolute inset-x-0 top-[calc(100%-13rem)] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[calc(100%-30rem)]"
             aria-hidden="true"
           >
+            
             <div
               className="relative left-[calc(50%+3rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 sm:left-[calc(50%+36rem)] sm:w-[72.1875rem]"
               style={{

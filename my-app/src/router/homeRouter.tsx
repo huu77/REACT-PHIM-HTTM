@@ -1,5 +1,5 @@
-import { Home } from "../features";
-import { Categories,SlideComponent } from "../features/Compoment";
+import { Home, Item1, Item2, Item3 } from "../features";
+import { SlideComponent } from "../features/Compoment";
 import TaskList from "../features/TaskList";
 
 export const homeRouter={
@@ -8,11 +8,15 @@ export const homeRouter={
     children: [
         {
             path: "",
-            element: <Categories />,
+            element: <Item1 />,
         },
         {
             path: "test1",
-            element: <SlideComponent />,
-        }
+            element:<Item2/>,
+        },
+        {
+            path: "test2",
+            element:<Item3/>,
+        },
     ]
 }

@@ -11,17 +11,20 @@ interface SliderSettings {
   slidesToScroll: number;
   autoplay: boolean;
   autoplaySpeed: number;
-  beforeChange:(current: number, next: number)=>void
+  beforeChange: (current: number, next: number) => void
 }
-
-const SlideComponent: React.FC = () => {
+export interface movieInterface{
+  nameTitle:string,
+  number:number
+}
+const SlideComponent = ({nameTitle,number}:movieInterface) => {
   const [activeSlide, setActiveSlide] = useState<number | null>(null);
 
   const settings: SliderSettings = {
     dots: true,
     infinite: true,
     speed: 500,
-    slidesToShow: 3,
+    slidesToShow: number,
     slidesToScroll: 1,
     autoplay: true,
     autoplaySpeed: 2000,
@@ -32,14 +35,15 @@ const SlideComponent: React.FC = () => {
   };
 
   return (
-    <div className="bg-gray-100">
+    <div className="bg-gray-100 mt-5  ">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="mx-auto max-w-2xl py-16 sm:py-24 lg:max-w-none lg:py-32">
+      
+        <div className="mx-auto max-w-2xl py-16 sm:py-24 lg:max-w-none lg:py-2  ">
+        <h2 className="text-2xl font-bold text-gray-900">{nameTitle}</h2>
           <Slider {...settings} className="">
+             
             <div
-              className={`w-96 h-72 rounded-2xl overflow-hidden mx-2 p-1  ${
-                activeSlide === 0 ? '' : ''
-              }`}
+              className={`w-80 h-72 rounded-2xl mx-2 p-1 mx-10}`}
             >
               <img
                 className="w-full h-full object-cover"
@@ -48,39 +52,43 @@ const SlideComponent: React.FC = () => {
               />
             </div>
             <div
-              className={`w-96 h-72 rounded-2xl overflow-hidden mx-2 p-1  ${
-                activeSlide === 1 ? '' : ''
-              }`}
+              className={`w-80 h-72 rounded-2xl mx-2 p-1 mx-10}`}
             >
               <img
                 className="w-full h-full object-cover"
                 src="https://www.elleman.vn/wp-content/uploads/2019/05/07/phim-dien-anh-he-2019-elle-man-1-475x327.jpg"
-                alt="Slide 2"
+                alt="Slide 1"
               />
             </div>
             <div
-              className={`w-96 h-72 rounded-2xl overflow-hidden mx-2 p-1  ${
-                activeSlide === 2 ? '' : ''
-              }`}
+              className={`w-80 h-72 rounded-2xl mx-2 p-1 mx-10}`}
             >
               <img
                 className="w-full h-full object-cover"
                 src="https://www.elleman.vn/wp-content/uploads/2019/05/07/phim-dien-anh-he-2019-elle-man-1-475x327.jpg"
-                alt="Slide 3"
+                alt="Slide 1"
               />
             </div>
             <div
-              className={`w-96 h-72 rounded-2xl overflow-hidden mx-2 p-1  ${
-                activeSlide === 3 ? '' : ''
-              }`}
+              className={`w-80 h-72 rounded-2xl mx-2 p-1 mx-10}`}
             >
               <img
                 className="w-full h-full object-cover"
                 src="https://www.elleman.vn/wp-content/uploads/2019/05/07/phim-dien-anh-he-2019-elle-man-1-475x327.jpg"
-                alt="Slide 4"
+                alt="Slide 1"
+              />
+            </div>
+            <div
+              className={`w-80 h-72 rounded-2xl mx-2 p-1 mx-10}`}
+            >
+              <img
+                className="w-full h-full object-cover"
+                src="https://www.elleman.vn/wp-content/uploads/2019/05/07/phim-dien-anh-he-2019-elle-man-1-475x327.jpg"
+                alt="Slide 1"
               />
             </div>
           </Slider>
+
         </div>
       </div>
     </div>

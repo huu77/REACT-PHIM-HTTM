@@ -6,6 +6,11 @@ import Register from './Register'
 import Info from './Info'
 import Dashboard from './Dashboard'
 import Movie from './Movie'
+import Item1 from './Home/Item1'
+import Item2 from './Home/Item2'
+import Item3 from './Home/Item3'
+import ManyItem from './Compoment/Categories/ManyItem'
+import MovieItem from './Movie/MovieItem'
 export {
     Wellcomepage,
     Err404, 
@@ -14,5 +19,5 @@ export {
     Register,
     Info,
     Dashboard,
-    Movie
+    Movie,Item1,ManyItem, Item2,Item3,MovieItem
 }
