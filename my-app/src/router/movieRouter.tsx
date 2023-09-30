@@ -1,4 +1,4 @@
- import {Movie, MovieItem} from '../features'
+ import {Movie, MovieItem,ListMovies} from '../features'
  
 
 export const movieRouter={
@@ -6,9 +6,9 @@ export const movieRouter={
     element: <Movie />,
     children: [
         {
-            path: "",
-            element: <MovieItem />,
+            path: ":id",
+            element: <ListMovies />,
         },
-      
+     
     ]
 }

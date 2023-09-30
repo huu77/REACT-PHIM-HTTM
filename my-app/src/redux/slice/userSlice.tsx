@@ -3,7 +3,8 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import requestApi from '../../axios';
 import axios from 'axios';
 const apiUrl = import.meta.env.VITE_SOME_KEY
-import { produce } from 'immer';
+import  WritableDraft  from 'immer';
+
 // interface
 export type Role = 'user' | 'admin'
 export interface User {
@@ -122,7 +123,8 @@ const userSlice = createSlice({
             })
             .addCase(dataUser.fulfilled, (state, action) => {
                 state.loading = false;
-                state.user = action.payload;
+                state.user = action.payload ;
+                state.error = null;
             })
             .addCase(dataUser.rejected, (state, action) => {
                 state.loading = false;

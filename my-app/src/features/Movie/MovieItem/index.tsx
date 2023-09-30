@@ -1,11 +1,34 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Video from './video'
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 
 import Comment from './comment'
-import { Categories } from '../../Compoment';
+import { Categories, Rating } from '../../Compoment';
 import InputComment from './inputComment';
+import { useParams } from 'react-router-dom';
+import requestApi from '../../../axios';
+const apiUrl:string = import.meta.env.VITE_SOME_KEY;
 const index = () => {
+     
+    const [data,setData]=useState([])
+ 
+    
+    useEffect(() => {
+        const fetchData = async () => {
+          try {
+            const response = await requestApi(`episodes/64f59bac6efbfa1e1a30fcf7`, "GET", undefined);
+            console.log("ket qua ",response);
+            // Handle the response data as needed
+             
+          } catch (error) {
+            console.error('Error fetching data:', error);
+            // Handle the error, e.g., show an error message to the user
+          }
+        };
+    
+        fetchData();
+      }, []);
+    
     const [isText, setIsText] = useState<Boolean>(false)
     const [isLike, setIsLike] = useState<Boolean>(false)
     const handelLike = () => {
@@ -17,7 +40,7 @@ const index = () => {
     return (
         <div>
             <div className='w-10 h-10'></div>
-            <Video videoUrl={'https://www.youtube.com/watch?v=mAL03fAQZQk'} />
+            <Video videoUrl={`http://localhost:9999/uploads/videos/64f44a12ea056b72c6b15010/64f59d9f94d2e88cd1ed2e64.mp4`} />
             <h2 className="mt-10  text-2xl font-bold leading-9 tracking-tight text-gray-900">
                 Highlights | Đừng Nói Dối Em - My Lovely Liar_Độc Quyền TV360
             </h2>
@@ -48,6 +71,9 @@ const index = () => {
             {/* Quoc gia*/}
             <div className='w-4/5 h-auto overflow-hidden'>
                 <p className='text-ellipsis text-gray-500'>Quoc Gia : Viet Nam</p>
+            </div>
+            <div>
+            <Rating />
             </div>
             <div>
                 <h2 className="mt-10 text-xl font-bold leading-9 tracking-tight text-gray-900">

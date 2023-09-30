@@ -11,6 +11,7 @@ import Item2 from './Home/Item2'
 import Item3 from './Home/Item3'
 import ManyItem from './Compoment/Categories/ManyItem'
 import MovieItem from './Movie/MovieItem'
+import ListMovies from './Movie/ListMovies'
 export {
     Wellcomepage,
     Err404, 
@@ -19,5 +20,5 @@ export {
     Register,
     Info,
     Dashboard,
-    Movie,Item1,ManyItem, Item2,Item3,MovieItem
+    Movie,Item1,ManyItem, Item2,Item3,MovieItem,ListMovies
 }

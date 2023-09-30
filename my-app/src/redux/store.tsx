@@ -11,7 +11,7 @@ const persistConfig = {
     key: 'root',
     storage,
     stateReconciler: autoMergeLevel2,
-    whitelist: ['user'] // các slice mà u muốn nó lưu lại trong localStorage and blacklist là ngược lại, ko có dùng thì nó lưu hết
+    whitelist: ['user','movies'] // các slice mà u muốn nó lưu lại trong localStorage and blacklist là ngược lại, ko có dùng thì nó lưu hết
   }
   
   const persistedReducer = persistReducer(persistConfig, rootReducer)
