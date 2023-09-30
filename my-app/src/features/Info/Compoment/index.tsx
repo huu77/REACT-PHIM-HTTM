@@ -1,10 +1,12 @@
-import React, { useEffect } from "react"
+import React, { useEffect, useState } from "react"
 import UserChangeAvata from "./UserChangeAvata";
 import LoadingSpinner from "../../../Loading";
+import { useDispatch } from "react-redux";
+import { updateUser } from "../../../redux/slice/userSlice";
 
 
 export default function Example({ user, loading }: { user: any, loading: any }) {
-
+  const dispatch = useDispatch();
 
   if (loading) {
     return (
@@ -20,7 +22,7 @@ export default function Example({ user, loading }: { user: any, loading: any }) 
           borderRadius: '50%',
         }}
       >
-       
+
         <LoadingSpinner color="#F4E1F4" loading={loading} size={100} />
       </div>
     );
@@ -29,6 +31,36 @@ export default function Example({ user, loading }: { user: any, loading: any }) 
   // Kiểm tra user trước khi hiển thị thông tin
   if (!user) {
     return <div>User not found</div>;
+  }
+  const [userData, setUserData] = useState({
+    first: user?.name.first || "",
+    last: user?.name.last || "",
+    email: user?.email || "",
+  });
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setUserData({
+      ...userData,
+      [name]: value,
+    });
+  };
+  const hadleUpdate = () => {
+    const formData:any = {
+      name: {
+        first: userData.first,
+        last: userData.last
+      },
+      email: userData.email,
+    }
+
+    try {
+      dispatch(updateUser({ user:user, formData :formData}));
+    } catch (error) {
+      console.log(error);
+
+    }
+
   }
   return (
     <div>
@@ -45,13 +77,13 @@ export default function Example({ user, loading }: { user: any, loading: any }) 
                     {/* <PaperClipIcon className="h-5 w-5 flex-shrink-0 text-gray-400" aria-hidden="true" /> */}
                     <div className="ml-4 flex min-w-0 flex-1 gap-2">
                       <span className="truncate font-medium">First Name</span>
-                      <span className="flex-shrink-0 text-gray-400"  > {user?.name.first} </span>
+                      <input className="flex-shrink-0 text-gray-400 w-full" name="first" value={userData.first} onChange={handleChange} />
                     </div>
                   </div>
                   <div className="ml-4 flex-shrink-0">
-                    <a href="#" className="font-medium text-indigo-600 hover:text-indigo-500">
+                    <button className="font-medium text-indigo-600 hover:text-indigo-500" onClick={hadleUpdate}>
                       Change first
-                    </a>
+                    </button>
                   </div>
                 </li>
                 <li className="flex items-center justify-between py-4 pl-4 pr-5 text-sm leading-6">
@@ -59,13 +91,13 @@ export default function Example({ user, loading }: { user: any, loading: any }) 
                     {/* <PaperClipIcon className="h-5 w-5 flex-shrink-0 text-gray-400" aria-hidden="true" /> */}
                     <div className="ml-4 flex min-w-0 flex-1 gap-2">
                       <span className="truncate font-medium">Last Name</span>
-                      <span className="flex-shrink-0 text-gray-400"  > {user?.name.last} </span>
+                      <input className="flex-shrink-0 text-gray-400 w-full" name="last" value={userData.last} onChange={handleChange} />
                     </div>
                   </div>
                   <div className="ml-4 flex-shrink-0">
-                    <a href="#" className="font-medium text-indigo-600 hover:text-indigo-500">
+                    <button className="font-medium text-indigo-600 hover:text-indigo-500" onClick={hadleUpdate}>
                       Change Last
-                    </a>
+                    </button>
                   </div>
                 </li>
               </ul>
@@ -81,13 +113,13 @@ export default function Example({ user, loading }: { user: any, loading: any }) 
                   <div className="flex w-0 flex-1 items-center">
                     {/* <PaperClipIcon className="h-5 w-5 flex-shrink-0 text-gray-400" aria-hidden="true" /> */}
                     <div className="ml-4 flex min-w-0 flex-1 gap-2">
-                      <span className="flex-shrink-0 text-gray-400"  > {user?.email} </span>
+                      <input className="flex-shrink-0 text-gray-400 w-full" name="email" value={userData.email} onChange={handleChange} />
                     </div>
                   </div>
                   <div className="ml-4 flex-shrink-0">
-                    <a href="#" className="font-medium text-indigo-600 hover:text-indigo-500">
+                    <button className="font-medium text-indigo-600 hover:text-indigo-500" onClick={hadleUpdate}>
                       Change Email
-                    </a>
+                    </button>
                   </div>
                 </li>
 

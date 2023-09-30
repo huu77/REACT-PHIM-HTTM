@@ -1,20 +1,44 @@
-import React, { ChangeEvent, useState } from 'react'
+import { ChangeEvent, useState } from 'react'
+import axios from 'axios';
+import { useDispatch } from 'react-redux';
+import { dataUser, updateUserAvatar, } from '../../../redux/slice/userSlice';
 const apiUrl = import.meta.env.VITE_SOME_KEY
+
+
+// compoment
 const UserChangeAvata = ({ user }: { user: any }) => {
-    const [selectedImage, setSelectedImage] = useState<string | null>(null); 
-    const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const dispatch = useDispatch();
+
+    const [selectedImage, setSelectedImage] = useState<string | null>(null);
+    const token = localStorage.getItem("accessToken");
+  
+    const handleImageChange = async (e: ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
         if (file) {
-          const reader = new FileReader();
-          reader.onload = async(event) => {
-// get api from redux toolkit , chang initstate avatar and update 
-            setSelectedImage(event.target?.result as string);
+            const reader = new FileReader();
+            reader.onload = async (event) => {
+                try {
+                    // Gửi yêu cầu cập nhật hình ảnh avatar thông qua action 
+                   
+                    dispatch(updateUserAvatar({ file, user, token }));
 
-          };
-          reader.readAsDataURL(file);
-        
+                    dispatch(dataUser());
+                    
+                    setSelectedImage(event.target?.result as string);
+                      
+                } catch (error) {
+                    console.error('Lỗi khi cập nhật hình ảnh:', error);
+                    setSelectedImage('')
+                }
+            };
+            reader.readAsDataURL(file);
+
         }
-      };
+    };
+
+
+
+
     return (
         <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
             <dt className="text-sm font-medium leading-6 text-gray-900">Attachments</dt>
@@ -27,16 +51,16 @@ const UserChangeAvata = ({ user }: { user: any }) => {
 
                                 <img
                                     className="inline-block h-10 w-10 rounded-full ring-2 ring-white object-fill "
-                                    src={selectedImage===null ? apiUrl+user.avatar :selectedImage}
+                                    src={selectedImage === null ? apiUrl + user.avatar : selectedImage}
                                     alt=""
                                 />
                             </div>
                         </div>
                         <div className="ml-4 flex-shrink-0">
-                            <label   htmlFor="file" className="font-medium text-indigo-600 hover:text-indigo-500">
+                            <label htmlFor="file" className="font-medium text-indigo-600 hover:text-indigo-500">
                                 Change Avatar
                             </label>
-                            <input type="file" name="file" id="file" className='hidden' accept="image/*" onChange={(e)=>handleImageChange(e)}/>
+                            <input type="file" name="file" id="file" className='hidden' accept="image/*" onChange={(e) => handleImageChange(e)} />
                         </div>
                     </li>
 

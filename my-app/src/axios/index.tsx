@@ -7,7 +7,8 @@ async function requestApi(
   endpoint: string,
   method: string,
   body: object | undefined,
-  responseType: MyResponseType = 'json'): Promise<any> {
+  responseType: MyResponseType = 'json'): Promise<unknown> {
+  // eslint-disable-next-line no-useless-catch
   try {
     const headers = {
       Accept: "application/json",
@@ -37,7 +38,7 @@ async function requestApi(
 
         return config; // Trả về config đã được cập nhật
       },
-      function (error: any) {
+      function (error: unknown) {
         // Xử lý lỗi nếu có
         return Promise.reject(error);
       }
@@ -50,7 +51,7 @@ async function requestApi(
         // Ví dụ: xử lý dữ liệu từ response
         return response;
       },
-      async (error) => {
+      async (error:any) => {
         // Xử lý lỗi nếu có
         const originalConfig = error.config;
         if (error.response && error.response.status === 419) {
@@ -68,7 +69,7 @@ async function requestApi(
             originalConfig.headers['Authorization'] = `Bearer ${accessToken}`;
 
             return instance(originalConfig);
-          } catch (error: any) {
+          } catch (error:any) {
             if (error.response && (error.response.status === 404 || error.response.status === 400)) {
               // Xóa token và điều hướng đến trang "LoginPage"
               localStorage.removeItem('accessToken');

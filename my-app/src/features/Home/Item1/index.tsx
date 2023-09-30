@@ -7,7 +7,7 @@ const index = () => {
       <div className='mt-10 w-full h-10'></div>
       <SlideComponent nameTitle={'Phim Đề Xuất'} number={4} />
       <Categories nameTitle={'Phim Đề Xuất'} />
-      <Categories nameTitle={'Phim Đề Xuất'} />
+      
       <ManyItem nameTitle={'Phim Đề Xuất'} />
     </div>
   )

@@ -33,7 +33,7 @@ const index = () => {
             </div>
              
               <div className='flex'>
-                <h1 className='hidden sm:block font-bold'>Hi {user.name.last} !</h1>
+                <h1 className='hidden sm:block font-bold'>Hi {user?.name?.last} !</h1>
               <Dropdown />
               </div>
            

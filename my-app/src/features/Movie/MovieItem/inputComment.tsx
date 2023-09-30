@@ -13,7 +13,11 @@ function CommentInput({ onCommentSubmit }:{onCommentSubmit:any}) {
       setComment('');
     }
   };
-
+  const handleInputKeyPress = (event: { key: string; }) => {
+    if (event.key === 'Enter') {
+      handleSubmit();
+    }
+  };
   return (
     <div className="flex">
       <input
@@ -22,12 +26,13 @@ function CommentInput({ onCommentSubmit }:{onCommentSubmit:any}) {
         value={comment}
         onChange={handleInputChange}
         className="border rounded-l p-2 w-full"
+        onKeyUp={handleInputKeyPress}
       />
       <button
         onClick={handleSubmit}
         className="bg-blue-500 text-white p-2 rounded-r"
       >
-        Gửi
+        Send
       </button>
     </div>
   );

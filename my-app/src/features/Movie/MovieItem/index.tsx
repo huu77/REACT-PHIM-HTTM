@@ -3,13 +3,17 @@ import Video from './video'
 import ThumbUpIcon from '@mui/icons-material/ThumbUp';
 
 import Comment from './comment'
+import { Categories } from '../../Compoment';
+import InputComment from './inputComment';
 const index = () => {
     const [isText, setIsText] = useState<Boolean>(false)
     const [isLike, setIsLike] = useState<Boolean>(false)
     const handelLike = () => {
         setIsLike(!isLike)
-       
+
     }
+    
+    
     return (
         <div>
             <div className='w-10 h-10'></div>
@@ -19,7 +23,7 @@ const index = () => {
             </h2>
             <h2 className={`font-bold text-${isLike ? 'green' : 'blue'}-600 cursor-pointer mr-4 flex align-center`}
                 onClick={() => handelLike()}>
-                <ThumbUpIcon className='mr-3'/>
+                <ThumbUpIcon className='mr-3' />
                 LIKE
             </h2>
             <button className='rounded-lg border-current border-2 px-4 mr-2 mt-2'>Danh cho ban</button>
@@ -46,12 +50,17 @@ const index = () => {
                 <p className='text-ellipsis text-gray-500'>Quoc Gia : Viet Nam</p>
             </div>
             <div>
-                <Comment />
+                <h2 className="mt-10 text-xl font-bold leading-9 tracking-tight text-gray-900">
+                    Comment
+                </h2>
+                <Comment  />
+           
             </div>
             <div>
                 <h2 className="mt-10  text-xl font-bold leading-9 tracking-tight text-gray-900">
                     TƯƠNG TỰ
                 </h2>
+                <Categories nameTitle={''} />
             </div>
         </div>
     )
