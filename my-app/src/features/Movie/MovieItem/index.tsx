@@ -1,95 +1,90 @@
-import React, { useEffect, useState } from 'react'
-import Video from './video'
-import ThumbUpIcon from '@mui/icons-material/ThumbUp';
+import { useState } from "react";
+import Video from "./video";
+import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 
-import Comment from './comment'
-import { Categories, Rating } from '../../Compoment';
-import InputComment from './inputComment';
-import { useParams } from 'react-router-dom';
-import requestApi from '../../../axios';
-const apiUrl:string = import.meta.env.VITE_SOME_KEY;
-const index = () => {
-     
-    const [data,setData]=useState([])
- 
-    
-    useEffect(() => {
-        const fetchData = async () => {
-          try {
-            const response = await requestApi(`episodes/64f59bac6efbfa1e1a30fcf7`, "GET", undefined);
-            console.log("ket qua ",response);
-            // Handle the response data as needed
-             
-          } catch (error) {
-            console.error('Error fetching data:', error);
-            // Handle the error, e.g., show an error message to the user
-          }
-        };
-    
-        fetchData();
-      }, []);
-    
-    const [isText, setIsText] = useState<Boolean>(false)
-    const [isLike, setIsLike] = useState<Boolean>(false)
-    const handelLike = () => {
-        setIsLike(!isLike)
+import Comment from "./comment";
+import { Categories, Rating } from "../../Compoment";
 
-    }
-    
-    
-    return (
-        <div>
-            <div className='w-10 h-10'></div>
-            <Video videoUrl={`http://localhost:9999/uploads/videos/64f44a12ea056b72c6b15010/64f59d9f94d2e88cd1ed2e64.mp4`} />
-            <h2 className="mt-10  text-2xl font-bold leading-9 tracking-tight text-gray-900">
-                Highlights | Đừng Nói Dối Em - My Lovely Liar_Độc Quyền TV360
-            </h2>
-            <h2 className={`font-bold text-${isLike ? 'green' : 'blue'}-600 cursor-pointer mr-4 flex align-center`}
-                onClick={() => handelLike()}>
-                <ThumbUpIcon className='mr-3' />
-                LIKE
-            </h2>
-            <button className='rounded-lg border-current border-2 px-4 mr-2 mt-2'>Danh cho ban</button>
-            <button className='rounded-lg border-current border-2 px-4  mr-2 mt-2'>Phim Trung Quoc</button>
-            <button className='rounded-lg border-current border-2 px-4  mr-2 mt-2'>Phim Hanh Dong</button>
-            <div className='w-4/5 h-auto overflow-hidden'>
+const apiUrl: string = import.meta.env.VITE_SOME_KEY;
+const index = ({ _dataMovie }) => {
+  console.log(_dataMovie);
 
-                <h2 className={isText ? 'text-ellipsis' : `truncate  `} onClick={() => setIsText(!isText)}>Đại Đường Vinh Diệu - The Glory Of Tang Dynasty phim thuộc thể loại dã sữ do Trung Quốc sản xuất xoay quanh câu chuyện nói về
-                    Trầm Trân Châu một tiểu thư khuê cát nhưng bị ép phải làm phi tần Đại Đường Vinh Diệu - The Glory Of Tang Dynasty phim thuộc thể loại dã sữ do Trung Quốc sản xuất xoay quanh câu chuyện nói về
-                    Trầm Trân Châu một tiểu thư khuê cát nhưng bị ép phải làm phi tần
-                </h2>
-            </div>
-            {/* dien vien */}
-            <div className='w-4/5 h-auto overflow-hidden'>
-                <p className='text-ellipsis text-gray-500'>Dien Vien :Nguyen Thanh Huu , Luu quoc Phi , Pham Bang bang</p>
-            </div>
+  const [isText, setIsText] = useState<Boolean>(false);
+  const [isLike, setIsLike] = useState<Boolean>(false);
+  const handelLike = () => {
+    setIsLike(!isLike);
+  };
 
-            {/* dao dien */}
-            <div className='w-4/5 h-auto overflow-hidden'>
-                <p className='text-ellipsis text-gray-500'>Dao dien  :Nguyen Thanh Huu , Luu quoc Phi , Pham Bang bang</p>
-            </div>
-            {/* Quoc gia*/}
-            <div className='w-4/5 h-auto overflow-hidden'>
-                <p className='text-ellipsis text-gray-500'>Quoc Gia : Viet Nam</p>
-            </div>
-            <div>
-            <Rating />
-            </div>
-            <div>
-                <h2 className="mt-10 text-xl font-bold leading-9 tracking-tight text-gray-900">
-                    Comment
-                </h2>
-                <Comment  />
-           
-            </div>
-            <div>
-                <h2 className="mt-10  text-xl font-bold leading-9 tracking-tight text-gray-900">
-                    TƯƠNG TỰ
-                </h2>
-                <Categories nameTitle={''} />
-            </div>
-        </div>
-    )
-}
+  return (
+    <div>
+      <div className="w-10 h-10"></div>
+      <Video videoUrl={`http://localhost:9999${_dataMovie?.videoUrl}`} />
+      <h2 className="mt-10 text-2xl font-bold leading-9 tracking-tight text-gray-900 mb-10"></h2>
+      <h2
+        className={`font-bold text-${
+          isLike ? "green" : "blue"
+        }-600 cursor-pointer mr-4 flex align-center`}
+        onClick={() => handelLike()}
+      >
+        <ThumbUpIcon className="mr-3" />
+        LIKE
+      </h2>
+      <button className="rounded-lg border-current border-2 px-4 mr-2 mt-2">
+        Danh cho ban
+      </button>
+      <button className="rounded-lg border-current border-2 px-4  mr-2 mt-2">
+        Phim Trung Quoc
+      </button>
+      <button className="rounded-lg border-current border-2 px-4  mr-2 mt-2">
+        Phim Hanh Dong
+      </button>
+      <div className="w-4/5 h-auto overflow-hidden">
+        <h2
+          className={isText ? "text-ellipsis" : `truncate  `}
+          onClick={() => setIsText(!isText)}
+        >
+          Đại Đường Vinh Diệu - The Glory Of Tang Dynasty phim thuộc thể loại dã
+          sữ do Trung Quốc sản xuất xoay quanh câu chuyện nói về Trầm Trân Châu
+          một tiểu thư khuê cát nhưng bị ép phải làm phi tần Đại Đường Vinh Diệu
+          - The Glory Of Tang Dynasty phim thuộc thể loại dã sữ do Trung Quốc
+          sản xuất xoay quanh câu chuyện nói về Trầm Trân Châu một tiểu thư khuê
+          cát nhưng bị ép phải làm phi tần
+        </h2>
+      </div>
+      {/* dien vien */}
+      <div className="w-4/5 h-auto overflow-hidden">
+        <p className="text-ellipsis text-gray-500">
+          Dien Vien :Nguyen Thanh Huu , Luu quoc Phi , Pham Bang bang
+        </p>
+      </div>
 
-export default index
+      {/* dao dien */}
+      <div className="w-4/5 h-auto overflow-hidden">
+        <p className="text-ellipsis text-gray-500">
+          Dao dien :Nguyen Thanh Huu , Luu quoc Phi , Pham Bang bang
+        </p>
+      </div>
+      {/* Quoc gia*/}
+      <div className="w-4/5 h-auto overflow-hidden">
+        <p className="text-ellipsis text-gray-500">Quoc Gia : Viet Nam</p>
+      </div>
+      <div>
+        <Rating />
+      </div>
+      <div>
+        <h2 className="mt-10 text-xl font-bold leading-9 tracking-tight text-gray-900">
+          Comment
+        </h2>
+        <Comment />
+      </div>
+      <div>
+        <h2 className="mt-10  text-xl font-bold leading-9 tracking-tight text-gray-900">
+          TƯƠNG TỰ
+        </h2>
+        <Categories nameTitle={""} />
+      </div>
+    </div>
+  );
+};
+
+export default index;

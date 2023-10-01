@@ -1,22 +1,55 @@
-import { useState } from "react";
-import { Movie, MovieItem } from "../..";
-
+import { Key, useEffect, useState } from "react";
+import { MovieItem } from "../..";
+import { useParams } from "react-router-dom";
+import requestApi from "../../../axios";
+const apiUrl = import.meta.env.VITE_SOME_KEY;
 const index = () => {
   const [selectedEpisode, setSelectedEpisode] = useState(1);
-  const episodes = ["Tập 1", "Tập 2", "Tập 3", "Tập 4"]; // Dữ liệu tập phim giả lập
+  // get movie from id movies
+  const [_dataOfMovie, setDataofMovie] = useState<any>([]);
+  // truyen sang item movie
+  const [_dataMovie,setDataMovie]=useState<any>({})
 
   const handleEpisodeChange = (episodeNumber: number) => {
     setSelectedEpisode(episodeNumber);
+    if (_dataOfMovie[episodeNumber - 1]) {
+      setDataMovie({..._dataOfMovie[episodeNumber - 1]})
+    }
+     
+    
   };
+  const { id } = useParams();
+  const [data, setData] = useState<any>({});
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response: any = await requestApi(
+          `movies/${id}`,
+          "GET",
+          undefined
+        );
+        setData({...response});
+        const result:any= await requestApi(`episodes?movieId=${id}`,"GET",undefined)
+        setDataofMovie([...result])
+        setDataMovie({...result[0]})
+      } catch (error) {
+        console.error("Error fetching data:", error);
+        // Handle the error, e.g., show an error message to the user
+      }
+    };
+
+    fetchData();
+  }, []);
+ 
   return (
     <div className="group relative mt-10 h-full">
       <h2 className="mt-10 text-2xl font-bold leading-9 tracking-tight text-gray-900 mb-10">
-        Highlights | Đừng Nói Dối Em - My Lovely Liar_Độc Quyền TV360
+        {data?.title}
       </h2>
       <div className="relative max-h-3/6 w-full overflow-hidden rounded-lg bg-white sm:aspect-h-1 sm:aspect-w-2 lg:aspect-h-1 lg:aspect-w-1 group-hover:opacity-75 sm:h-64">
         <img
           src={
-            "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+            `${apiUrl}/${data.posterUrl}`
           }
           alt={"test"}
           className="h-full w-full object-cover object-center"
@@ -34,7 +67,7 @@ const index = () => {
         <h2 className="mt-10 text-xl font-bold leading-9 tracking-tight text-gray-900 mb-10">
           Số Tập Phim
         </h2>
-        {episodes.map((episode, index) => (
+        {_dataOfMovie.map((_: any, index: any) => (
           <button
             key={index}
             className={`ml-2 py-1 px-2 rounded-full hover:bg-gray-200 ${
@@ -42,11 +75,14 @@ const index = () => {
             }`}
             onClick={() => handleEpisodeChange(index + 1)}
           >
-            {episode}
+            Tập {index + 1}
           </button>
         ))}
+       
       </div>
-      <MovieItem/>
+      <MovieItem 
+       _dataMovie={_dataMovie}
+       />
     </div>
   );
 };
