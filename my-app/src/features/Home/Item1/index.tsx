@@ -3,12 +3,12 @@ import { Categories, SlideComponent } from '../../Compoment'
 import { ManyItem } from '../..'
 const index = () => {
   return (
-    <div className=' bg-gray-100 w-auto h-auto'>
+    <div className=' bg-gray-100 w-auto  min-h-screen'>
       <div className='mt-10 w-full h-10'></div>
       <SlideComponent nameTitle={'Phim Đề Xuất'} number={4} />
-      <Categories nameTitle={'Phim Đề Xuất'} />
+      <Categories nameTitle={'Phim Mới'} />
       
-      <ManyItem nameTitle={'Phim Đề Xuất'} />
+     
     </div>
   )
 }

@@ -1,4 +1,4 @@
- import {Movie, MovieItem,ListMovies} from '../features'
+ import {Movie, SearchCompoment,ListMovies} from '../features'
  
 
 export const movieRouter={
@@ -9,6 +9,16 @@ export const movieRouter={
             path: ":id",
             element: <ListMovies />,
         },
-     
+        {
+            path: "search",
+            element: <SearchCompoment />,
+            children: [
+              {
+                // Sử dụng tham số động "q" trong URL
+                path: ":q",
+                element: <SearchCompoment />,
+              },
+            ],
+          },
     ]
 }

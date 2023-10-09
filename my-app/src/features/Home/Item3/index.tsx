@@ -1,67 +1,78 @@
-import React, { useEffect, useState } from 'react'
-import { Categories, SlideComponent } from '../../Compoment'
-import { ManyItem } from '../..'
-import Slider from 'react-slick';
-import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css';
-import requestApi from '../../../axios';
+import { useEffect, useState } from "react";
+import requestApi from "../../../axios";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
+import { ManyItem } from "../..";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../../redux/reducer";
+import { fetchGenres } from "../../../redux/slice/genresSlice";
+const Index = () => {
+  const dispatch = useDispatch();
 
+  // Use Redux store to manage genres and loading state
+  const { items, isLoading }: { items: any; isLoading: any } =
+    useSelector((state: RootState) => ({
+      items: state.genres.items,
+      isLoading: state.genres.isLoading,
+    }));
 
-const index = () => {
-    const settings = {
-        dots: false,
-        infinite: true,
-        speed: 500,
-        slidesToShow:3,
-        slidesToScroll: 1,
-        autoplay: true,
-        autoplaySpeed: 2000,
-    
-    };
-    const [items, setItems] = useState([]);
+    const [itemSelect, setItemSelect] = useState<any>([]);
+  // useEffect to fetch genres when the component mounts
+  useEffect(() => {
+    // Dispatch the fetchGenres action
+    dispatch(fetchGenres());
+    const fetchData = async () => {
+      const kq = await requestApi(
+        `movies/genres/${items[0]._id}`,
+        "GET",
+        undefined
+      );
+      setItemSelect(kq); 
+    }
+    fetchData()
+  }, [dispatch]);
+  const handleOnclick = async (item: any) => {
+    const listItemTogenres = await requestApi(
+      `movies/genres/${item._id}`,
+      "GET",
+      undefined
+    );
 
-    useEffect(() => {
-      const fetchData = async () => {
-        try {
-          const response = await requestApi('genres', 'GET', undefined);
-          const itemNames = response.map((item: { name: any; }) => item.name);
-          setItems(itemNames); // Update the state with the mapped data
-        } catch (error) {
-          console.error('Error fetching data:', error);
-        }
-      };
-  
-      fetchData();
-    }, []);
+    setItemSelect(listItemTogenres);
+  };
 
- console.log(items);
- 
-    return (
-        <>
-            <div className='w-full flex items-center justify-center mb-10'>
-                <div className='w-3/5'>
-                    <div className='mt-20 w-full h-10'></div>
+  return (
+    <>
+      <div className="w-full flex items-center justify-center mb-10 ">
+        <div className="w-full min-h-screen ">
 
-                    <Slider {...settings}>
-                        {items.map((item, index) => (
-                            <div key={index} className='w-10'>
-                                <p className='font-bold'>{item}</p>
-                            </div>
-                        ))}
+          <div className="mt-20 w-full h-10"></div>
 
-                    </Slider>
+          <div className="flex w-11/12 justify-center items-center">
+            {isLoading
+              ? items.map((_, index) => (
+                  <div key={index} className="w-10">
+                    <Skeleton width={40} height={20} />
+                  </div>
+                ))
+              : items.map((item, index) => (
+                  <div
+                    key={index}
+                    className="w-20 hover:text-red-500 cursor-pointer mx-5"
+                    onClick={() => handleOnclick(item)}
+                  >
+                    <span className="font-bold ">{item?.name}</span>
+                  </div>
+                ))}
+          </div>
+          <ManyItem nameTitle={"Phim Đề Xuất"} data={itemSelect} isLoading={isLoading}/>
+        </div>
+      </div>
 
-                </div>
+      {/* <Categories nameTitle={"PHIM"} /> */}
+     
+    </>
+  );
+};
 
-            </div>
-
-            <SlideComponent nameTitle={'Phim Đề Xuất'} number={4} />
-            <SlideComponent nameTitle={'Phim Đề Xuất'} number={4} />
-            <SlideComponent nameTitle={'Phim Đề Xuất'} number={4} />
-            <SlideComponent nameTitle={'Phim Đề Xuất'} number={4} />
-
-        </>
-    )
-}
-
-export default index
+export default Index;

@@ -4,6 +4,7 @@ export const listMovies = createAsyncThunk(
   "movies",
   async () => {
     const response = await requestApi("movies", "GET", undefined);
+ 
     return response;
   },
   undefined

@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import MenuIcon from '@mui/icons-material/Menu';
-import { Link } from 'react-router-dom';
+import { Link,useLocation  } from 'react-router-dom';
 
 function MyComponent() {
+ 
+
     const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
     const toggleDropdown = () => {
@@ -21,7 +23,7 @@ function MyComponent() {
                 {isDropdownOpen && (
                     <div className='absolute top-full left-0 mt-2 bg-white border border-gray-300 shadow-lg'>
                         <ul>
-                            <li className='py-2 px-4 w-24 hover:bg-gray-100 'onClick={() => setIsDropdownOpen(false)} >  <Link to='/home'>TRANG CHỦ</Link></li>
+                            <li className='py-2 px-4 w-24 hover:bg-gray-100 'onClick={() => setIsDropdownOpen(false)} ><Link to='/home'>TRANG CHỦ</Link></li>
                             <li className='py-2 px-4 hover:bg-gray-100 w-24' onClick={() => setIsDropdownOpen(false)} ><Link to='/home/test1'>PHIM</Link></li>
                             <li className='py-2 px-4 hover:bg-gray-100 w-24' onClick={() => setIsDropdownOpen(false)} ><Link to='/home/test2'>VIDEO</Link></li>
                         </ul>

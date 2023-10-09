@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate,useLocation } from 'react-router-dom'
 import CircleNotificationsIcon from '@mui/icons-material/CircleNotifications';
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchInput from '../SearchInput';
@@ -40,10 +40,14 @@ const index = () => {
         if (hasChanged) {
 
             console.log('Search icon clicked', textInput);
+            navigation(`/movies/search?q=${textInput}`)
+           
         }
         setHasChanged(false)
     };
-
+    const location = useLocation();
+    const currentPath = location.pathname;
+ 
 
     return (
         <> <div className="bg-white">
@@ -64,7 +68,7 @@ const index = () => {
                         <div className="hidden lg:flex lg:justify-evenly  flex-row mx-1 px-2  ">
                             {data.map((item, index) => (
                                 <Link to={item.link} key={index} onClick={() => handleClick(item.ID)} className="flex justify-between">
-                                    <span className={`block font-mono mx-3 text-ellipsis text-bold text-3xl ${item.active === true ? "text-fuchsia-900" : 'text-black-800 '} hidden md:block`}>{item.TITLE}</span>
+                                    <span className={`block font-mono mx-3 text-ellipsis text-bold text-3xl ${currentPath === item.link ? "text-fuchsia-900" : 'text-black-800 '} hidden md:block`}>{item.TITLE}</span>
                                 </Link>
                             ))}
                         </div>
